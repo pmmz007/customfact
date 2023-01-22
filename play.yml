@@ -1,0 +1,23 @@
+---
+- name: custom fact install
+  hosts: web02
+  become: true
+  tasks:
+  - name: build custom fact directory
+    file:
+     state: directory
+     recurse: true
+     path: "{{ remote_dir }}"
+  - name: copy fact file to remote dir
+    copy:
+     src: "{{ remote_fact_file }}"
+     dest: "{{ remote_dir }}"
+  - name: install web server with custom facts
+    yum:
+     name: "{{ ansible_local.p1.localfacts.name }}"
+  - name: service start
+    service: 
+     name: "{{ ansible_local.p1.localfacts.service }}"
+     state: "{{ ansible_local.p1.localfacts.state }}"
+     enabled: "{{ ansible_local.p1.localfacts.enabled }}"
+

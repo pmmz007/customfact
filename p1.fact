@@ -1,0 +1,5 @@
+[localfacts]
+name: httpd
+service: httpd
+enabled: yes
+state: started
